@@ -2,13 +2,18 @@ package com.example.vitutuskyr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity {
 
     private NumberPicker picker;
     private String[] pickerNums;
+    private EditText textBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         picker.setWrapSelectorWheel(false);
 
         picker.setDisplayedValues(pickerNums);
-
-
     }
+
 }
