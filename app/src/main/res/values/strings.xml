@@ -3,4 +3,6 @@
     <string name="menuB">Menu</string>
     <string name="muistiinpanoEditText">Muistiinpano</string>
     <string name="saveB">SAVE</string>
+    <string name="averageText">Average</string>
+    <string name="maaraText">Määrä</string>
 </resources>
