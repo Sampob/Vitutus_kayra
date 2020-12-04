@@ -41,11 +41,6 @@ public class Kayra extends AppCompatActivity {
 
     private ImageButton trashB;
 
-    private TextView averageText;
-    private TextView maaraText;
-    private TextView tenAverageText;
-    private TextView arrowText;
-    private TextView tenText;
     private TextView noteText;
     private TextView dateText;
 
@@ -94,7 +89,7 @@ public class Kayra extends AppCompatActivity {
     private void lineCreation(){
         readFile();
 
-        averageText = findViewById(R.id.averageText);
+        TextView averageText = findViewById(R.id.averageText);
         df.setRoundingMode(RoundingMode.CEILING);
         if(average() <= 3) {
             averageText.setText(df.format(average()));
@@ -109,16 +104,16 @@ public class Kayra extends AppCompatActivity {
             averageText.setText(df.format(average()));
         }
 
-        maaraText = findViewById(R.id.maaraText);
+        TextView maaraText = findViewById(R.id.maaraText);
         if(lista.size() == 1){
             maaraText.setText(lista.size() + " Merkintä");
         } else {
             maaraText.setText(lista.size() + " Merkintää");
         }
 
-        tenAverageText = findViewById(R.id.tenAverageText);
-        arrowText = findViewById(R.id.arrowText);
-        tenText = findViewById(R.id.tenText);
+        TextView tenAverageText = findViewById(R.id.tenAverageText);
+        TextView arrowText = findViewById(R.id.arrowText);
+        TextView tenText = findViewById(R.id.tenText);
         tenText.setText(R.string.tenText);
         if(lista.size() >= 11) {
             if (tenAverage() < average() - 0.5f) {
