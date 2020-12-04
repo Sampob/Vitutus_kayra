@@ -40,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        readFile();
+    }
+
     public String getMessage(){
         EditText editText = findViewById(R.id.editText);
         return editText.getText().toString();

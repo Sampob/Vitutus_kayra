@@ -33,6 +33,10 @@ public class Merkinta {
         return ct.get(Calendar.DATE) + "." + ct.get(Calendar.MONTH);
     }
 
+    public Calendar getCalendar(){
+        return ct;
+    }
+
     public int getNumero() {
         return numero;
     }

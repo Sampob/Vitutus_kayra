@@ -1,12 +1,15 @@
 package com.example.vitutuskyr;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -17,23 +20,35 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Kayra extends AppCompatActivity {
 
     private LineChart mpLineChart;
     private ArrayList<Merkinta> lista;
+    private int index;
+    private boolean delete = false;
+
+    private ImageButton trashB;
+
     private TextView averageText;
     private TextView maaraText;
     private TextView tenAverageText;
     private TextView arrowText;
+    private TextView tenText;
+    private TextView noteText;
+    private TextView dateText;
+
     private DecimalFormat df = new DecimalFormat("0.0");
 
     @Override
@@ -41,6 +56,42 @@ public class Kayra extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kayra);
 
+        lineCreation();
+        mpLineChart.moveViewToX(lista.size());
+
+        noteText = findViewById(R.id.noteText);
+        dateText = findViewById(R.id.dateText);
+
+        noteText.setTextColor(Color.BLACK);
+        dateText.setTextColor(Color.BLACK);
+        dateText.setText("");
+        noteText.setText("");
+
+        trashB = findViewById(R.id.trashButton);
+        trashB.setVisibility(View.INVISIBLE);
+
+        mpLineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                index =(int) e.getX();
+                noteText.setText(lista.get(index).getNote());
+                dateText.setText("Aika: " + getTime());
+                delete = true;
+                trashB.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected() {
+                noteText.setText("");
+                dateText.setText("");
+                delete = false;
+                trashB.setVisibility(View.INVISIBLE);
+            }
+        });
+
+    }
+
+    private void lineCreation(){
         readFile();
 
         averageText = findViewById(R.id.averageText);
@@ -51,20 +102,31 @@ public class Kayra extends AppCompatActivity {
         } else if(average() >= 7) {
             averageText.setText(df.format(average()));
             averageText.setTextColor(Color.rgb(54,128,45));
+        } else if(lista.isEmpty()) {
+            averageText.setText("-");
         } else {
             averageText.setTextColor(Color.BLACK);
             averageText.setText(df.format(average()));
         }
 
+        maaraText = findViewById(R.id.maaraText);
+        if(lista.size() == 1){
+            maaraText.setText(lista.size() + " Merkintä");
+        } else {
+            maaraText.setText(lista.size() + " Merkintää");
+        }
+
         tenAverageText = findViewById(R.id.tenAverageText);
         arrowText = findViewById(R.id.arrowText);
-        if(lista.size() >= 10) {
-            if (tenAverage() <= average()) {
+        tenText = findViewById(R.id.tenText);
+        tenText.setText(R.string.tenText);
+        if(lista.size() >= 11) {
+            if (tenAverage() < average() - 0.5f) {
                 tenAverageText.setText(df.format(tenAverage()));
                 arrowText.setText( "↓");
                 tenAverageText.setTextColor(Color.rgb(252,145,58));
                 arrowText.setTextColor(Color.rgb(252,145,58));
-            } else if(tenAverage() >= average()) {
+            } else if(tenAverage() > average() + 0.5f) {
                 tenAverageText.setText(df.format(tenAverage()));
                 arrowText.setText("↑");
                 tenAverageText.setTextColor(Color.rgb(54,128,45));
@@ -74,9 +136,11 @@ public class Kayra extends AppCompatActivity {
                 tenAverageText.setText(df.format(tenAverage()));
                 arrowText.setText("");
             }
+        } else {
+            tenAverageText.setText("");
+            arrowText.setText("");
+            tenText.setText("");
         }
-        maaraText = findViewById(R.id.maaraText);
-        maaraText.setText(lista.size() + " Merkintää");
 
         mpLineChart = findViewById(R.id.lineChart);
         mpLineChart.setTouchEnabled(true);
@@ -110,7 +174,6 @@ public class Kayra extends AppCompatActivity {
             mpLineChart.setVisibleXRange(0, 8);
         }
         mpLineChart.setDragOffsetX(150);
-        mpLineChart.moveViewToX(lista.size());
 
         LineDataSet lineDataSet = new LineDataSet(dataValues(), "Käyrä");
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -139,10 +202,9 @@ public class Kayra extends AppCompatActivity {
         lineDataSet.setCircleRadius(8);
         lineDataSet.setCircleHoleRadius(3);
         lineDataSet.setValueTextSize(18);
-
     }
 
-    public void readFile() {
+    private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("lista", null);
@@ -193,6 +255,35 @@ public class Kayra extends AppCompatActivity {
             total += lista.get(i).getNumero();
         }
         return total / 10;
+    }
+
+    public void delB(View v){
+        if(lista.size() > 0 && delete) {
+            lista.remove(index);
+
+            SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(lista);
+            editor.putString("lista", json);
+            editor.apply();
+
+            noteText.setText("");
+            dateText.setText("");
+
+            delete = false;
+            trashB.setVisibility(View.INVISIBLE);
+
+            lineCreation();
+
+        } else {
+            Toast.makeText(Kayra.this, "Ei poistettavaa", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public String getTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm");
+        return sdf.format(lista.get(index).getCalendar().getTime());
     }
 
 }
