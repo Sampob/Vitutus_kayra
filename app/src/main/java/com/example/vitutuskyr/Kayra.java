@@ -32,6 +32,8 @@ public class Kayra extends AppCompatActivity {
     private ArrayList<Merkinta> lista;
     private TextView averageText;
     private TextView maaraText;
+    private TextView tenAverageText;
+    private TextView arrowText;
     private DecimalFormat df = new DecimalFormat("0.0");
 
     @Override
@@ -42,22 +44,44 @@ public class Kayra extends AppCompatActivity {
         readFile();
 
         averageText = findViewById(R.id.averageText);
-        df.setRoundingMode(RoundingMode.UP);
+        df.setRoundingMode(RoundingMode.CEILING);
         if(average() <= 3) {
-            averageText.setText("Ka. " + df.format(average()) + " ↓");
+            averageText.setText(df.format(average()));
             averageText.setTextColor(Color.rgb(252,145,58));
         } else if(average() >= 7) {
-            averageText.setText("Ka. " + df.format(average()) + " ↑");
+            averageText.setText(df.format(average()));
             averageText.setTextColor(Color.rgb(54,128,45));
-        } else { averageText.setTextColor(Color.BLACK);averageText.setText("Ka. " + df.format(average()) + " -");}
+        } else {
+            averageText.setTextColor(Color.BLACK);
+            averageText.setText(df.format(average()));
+        }
 
+        tenAverageText = findViewById(R.id.tenAverageText);
+        arrowText = findViewById(R.id.arrowText);
+        if(lista.size() >= 10) {
+            if (tenAverage() <= average()) {
+                tenAverageText.setText(df.format(tenAverage()));
+                arrowText.setText( "↓");
+                tenAverageText.setTextColor(Color.rgb(252,145,58));
+                arrowText.setTextColor(Color.rgb(252,145,58));
+            } else if(tenAverage() >= average()) {
+                tenAverageText.setText(df.format(tenAverage()));
+                arrowText.setText("↑");
+                tenAverageText.setTextColor(Color.rgb(54,128,45));
+                arrowText.setTextColor(Color.rgb(54,128,45));
+            } else {
+                tenAverageText.setTextColor(Color.BLACK);
+                tenAverageText.setText(df.format(tenAverage()));
+                arrowText.setText("");
+            }
+        }
         maaraText = findViewById(R.id.maaraText);
         maaraText.setText(lista.size() + " Merkintää");
 
         mpLineChart = findViewById(R.id.lineChart);
         mpLineChart.setTouchEnabled(true);
-        mpLineChart.setScaleEnabled(true);
-        mpLineChart.setPinchZoom(true);
+        mpLineChart.setScaleEnabled(false);
+        mpLineChart.setPinchZoom(false);
 
         XAxis xAxis = mpLineChart.getXAxis();
         YAxis leftAxis = mpLineChart.getAxisLeft();
@@ -74,13 +98,19 @@ public class Kayra extends AppCompatActivity {
         leftAxis.setAxisMaximum(11);
         leftAxis.setAxisMinimum(0);
         leftAxis.setSpaceBottom(10);
-        leftAxis.setLabelCount(6);
+        leftAxis.setLabelCount(10);
 
         xAxis.setAxisMinimum(-0.25f);
         xAxis.setAxisMaximum(xAxisLabel().size()-0.5f);
-        xAxis.setLabelCount(4);
-
-        mpLineChart.setScaleMinima((0.5f), 1.225f);
+        if(lista.size() < 8){
+            xAxis.setLabelCount(lista.size());
+            mpLineChart.setVisibleXRange(0, lista.size());
+        } else {
+            xAxis.setLabelCount(8);
+            mpLineChart.setVisibleXRange(0, 8);
+        }
+        mpLineChart.setDragOffsetX(150);
+        mpLineChart.moveViewToX(lista.size());
 
         LineDataSet lineDataSet = new LineDataSet(dataValues(), "Käyrä");
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -108,7 +138,7 @@ public class Kayra extends AppCompatActivity {
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setCircleRadius(8);
         lineDataSet.setCircleHoleRadius(3);
-        lineDataSet.setValueTextSize(16);
+        lineDataSet.setValueTextSize(18);
 
     }
 
@@ -154,6 +184,15 @@ public class Kayra extends AppCompatActivity {
         for (int i = 0; i < lista.size(); i++){
             total += lista.get(i).getNumero();
         }
-        return total/(lista.size());
+        return total / lista.size();
     }
+
+    private Float tenAverage(){
+        float total = 0;
+        for (int i = lista.size() - 10; i < lista.size(); i++){
+            total += lista.get(i).getNumero();
+        }
+        return total / 10;
+    }
+
 }

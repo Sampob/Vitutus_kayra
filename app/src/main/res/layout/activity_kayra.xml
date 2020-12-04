@@ -20,7 +20,7 @@
         android:text="@string/averageText"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tenAverageText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lineChart" />
 
@@ -28,10 +28,42 @@
         android:id="@+id/maaraText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/maaraText"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/averageText"
+        app:layout_constraintEnd_toEndOf="@+id/averageText"
         app:layout_constraintStart_toStartOf="@+id/averageText" />
+
+    <TextView
+        android:id="@+id/tenAverageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="36sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/averageText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/averageText" />
+
+    <TextView
+        android:id="@+id/tenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tenText"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@+id/maaraText"
+        app:layout_constraintEnd_toEndOf="@+id/tenAverageText"
+        app:layout_constraintStart_toStartOf="@+id/tenAverageText" />
+
+    <TextView
+        android:id="@+id/arrowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="TextView"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tenAverageText"
+        app:layout_constraintStart_toEndOf="@+id/tenAverageText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,4 +5,5 @@
     <string name="saveB">SAVE</string>
     <string name="averageText">Average</string>
     <string name="maaraText">Määrä</string>
+    <string name="tenText">Viimeisen 10 ka.</string>
 </resources>
