@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Fiilis käyrä</string>
-    <string name="menuB">Menu</string>
+    <string name="app_name">Fiiliskäyrä</string>
+    <string name="menuB">Käyrä</string>
     <string name="muistiinpanoEditText">Muistiinpano</string>
     <string name="saveB">SAVE</string>
     <string name="maaraText">Määrä</string>

@@ -1,6 +1,5 @@
 package com.example.vitutuskyr;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Merkinta {

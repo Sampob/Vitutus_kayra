@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/maaraText"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/averageText"
         app:layout_constraintEnd_toEndOf="@+id/averageText"
         app:layout_constraintStart_toStartOf="@+id/averageText" />
@@ -50,6 +51,7 @@
         android:layout_height="wrap_content"
         android:text="@string/tenText"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/tenAverageText"
         app:layout_constraintEnd_toEndOf="@+id/tenAverageText"
         app:layout_constraintStart_toStartOf="@+id/tenAverageText" />
