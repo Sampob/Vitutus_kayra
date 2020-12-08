@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">Vitutus käyrä</string>
-    <string name="menuB">Menu</string>
+    <string name="app_name">Fiiliskäyrä</string>
+    <string name="menuB">Käyrä</string>
     <string name="muistiinpanoEditText">Muistiinpano</string>
     <string name="saveB">SAVE</string>
     <string name="noteB">Notes</string>
+    <string name="maaraText">Määrä</string>
+    <string name="tenText">Viimeisen 10 ka.</string>
+    <string name="defaultText">default</string>
 </resources>

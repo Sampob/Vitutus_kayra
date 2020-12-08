@@ -1,19 +1,18 @@
 package com.example.vitutuskyr;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Merkinta implements Serializable {
+public class Merkinta {
 
     private String note;
     private int numero;
-    private Date currentTime;
+    private Calendar ct;
 
     public Merkinta(String note, int numero){
         this.note = note;
         this.numero = numero;
-        currentTime = Calendar.getInstance().getTime();
+        ct = Calendar.getInstance();
     }
 
     public Merkinta(int numero){
@@ -37,12 +36,12 @@ public class Merkinta implements Serializable {
         this.numero = numero;
     }
 
-    public Date getCurrentTime() {
-        return currentTime;
+    public String getCurrentTime(){
+        return ct.get(Calendar.DATE) + "." + ct.get(Calendar.MONTH);
     }
 
-    public void setCurrentTime(Date currentTime) {
-        this.currentTime = currentTime;
+    public Calendar getCalendar(){
+        return ct;
     }
 
     public String getStringNumero(){

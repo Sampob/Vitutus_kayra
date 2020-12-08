@@ -49,6 +49,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="31dp"
+        android:onClick="graphView"
         android:text="@string/menuB"
         app:layout_constraintBottom_toTopOf="@+id/noteB"
         app:layout_constraintStart_toStartOf="parent"
