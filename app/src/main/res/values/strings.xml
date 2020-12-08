@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Vitutus käyrä</string>
-    <string name="button">Button</string>
-    <string name="saveButton">Tallenna</string>
-    <string name="muistiinpano">Muistiinpano</string>
+    <string name="menuB">Menu</string>
+    <string name="muistiinpanoEditText">Muistiinpano</string>
+    <string name="saveB">SAVE</string>
+    <string name="noteB">Notes</string>
 </resources>
