@@ -1,7 +1,6 @@
 package com.example.vitutuskyr;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Merkinta {
 
@@ -13,11 +12,6 @@ public class Merkinta {
         this.note = note;
         this.numero = numero;
         ct = Calendar.getInstance();
-    }
-
-    public Merkinta(int numero){
-        this.numero = numero;
-        this.note = "";
     }
 
     public String getNote() {
@@ -42,10 +36,6 @@ public class Merkinta {
 
     public Calendar getCalendar(){
         return ct;
-    }
-
-    public String getStringNumero(){
-        return Integer.toString(numero);
     }
 
     public String toString(){

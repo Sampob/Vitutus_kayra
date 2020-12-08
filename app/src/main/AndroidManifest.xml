@@ -10,8 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VitutusKäyrä">
         <activity android:name=".Notedetails"></activity>
-        <activity android:name=".Muistiinpanot" />
-        <activity android:name=".Kayra" />
+        <activity android:name=".Muistiinpanot"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".Kayra"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
