@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 public class Notedetails extends AppCompatActivity {
 
-    TextView textnote, textka;
+    TextView textnote, textka, textday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,8 @@ public class Notedetails extends AppCompatActivity {
 
         textnote = findViewById(R.id.textNote);
         textka = findViewById(R.id.textKa);
+        textday = findViewById(R.id.textDay);
 
-        textnote.setText(GlobalModel.getInstance().getLista().get(i).getNote());
+
     }
 }
