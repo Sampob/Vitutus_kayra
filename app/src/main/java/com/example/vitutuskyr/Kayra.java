@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,7 +90,6 @@ public class Kayra extends AppCompatActivity {
                 trashB.setVisibility(View.INVISIBLE);
             }
         });
-
     }
 
     /**
@@ -183,8 +183,8 @@ public class Kayra extends AppCompatActivity {
 
         /* Asetetaan käyrän ominaisuudet. Itsestäänselviä */
         lineDataSet.setLineWidth(6);
-        lineDataSet.setColor(Color.parseColor("#9c27B0"));
-        lineDataSet.setCircleColor(Color.parseColor("#9C27B0"));
+        lineDataSet.setColor(getResources().getColor(R.color.purple));
+        lineDataSet.setCircleColor(getResources().getColor(R.color.purple));
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setCircleRadius(8);
         lineDataSet.setCircleHoleRadius(3);
@@ -247,6 +247,7 @@ public class Kayra extends AppCompatActivity {
                 tenAverageText.setText(df.format(tenAverage()));
                 arrowText.setText( "↓");                                                            //Trendi alas ja värit muutetaan oranssiin
                 tenAverageText.setTextColor(Color.rgb(252,145,58));
+                //tenAverageText.setTextColor(getResources().getColor(R.color.orange));
                 arrowText.setTextColor(Color.rgb(252,145,58));
             } else if(tenAverage() > average() + 0.5f) {
                 tenAverageText.setText(df.format(tenAverage()));

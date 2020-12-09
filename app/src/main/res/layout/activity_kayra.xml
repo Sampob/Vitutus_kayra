@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_drawable"
     tools:context=".Kayra">
 
     <com.github.mikephil.charting.charts.LineChart
@@ -75,7 +76,7 @@
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/maaraText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@+id/averageText" />
 
     <TextView
@@ -86,7 +87,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/defaultText"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/dateText"
@@ -97,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/poistaKayra"
         android:onClick="delB"
         app:layout_constraintBottom_toBottomOf="@+id/dateText"
         app:layout_constraintStart_toEndOf="@+id/dateText"

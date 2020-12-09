@@ -2,6 +2,10 @@ package com.example.vitutuskyr;
 
 import java.util.Calendar;
 
+/**
+ *
+ * */
+
 public class Merkinta {
 
     private String note;
