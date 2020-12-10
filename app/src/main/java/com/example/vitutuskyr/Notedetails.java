@@ -10,12 +10,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Notedetails extends AppCompatActivity {
 
     TextView textnote, textarvosana, textday;                 //Hakee teksti elementit
     private ArrayList<Merkinta> lista;                        //Hakee listan, johon tallennetaan ja ladataan merkinnät
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class Notedetails extends AppCompatActivity {
         readFile();                                                             //Lukee tallennetut merkinnät, jotta teksti elementit saavat oikeat arvot
         textnote.setText(lista.get(i).getNote());                               //Asettaa teksti elementeille arvot
         textarvosana.setText("" + lista.get(i).getNumero());
-        textday.setText("Päivä: " + lista.get(i).getCalendar().getTime());
+        textday.setText("Päivä: " + lista.get(i).getCurrentTime());
     }
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);   //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
@@ -44,5 +47,9 @@ public class Notedetails extends AppCompatActivity {
         if (lista == null){                                                                       //Rakentaa uuden listan, jos dataa ei ole
             lista = new ArrayList<>();
         }
+    }
+    public String getTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm", Locale.getDefault());
+        return sdf.format(lista.get(index).getCalendar().getTime());
     }
 }
