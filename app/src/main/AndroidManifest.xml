@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.vitutuskyr">
+    package="com.example.fiiliskayra">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/fiiliskayra_round_icon"
+        android:roundIcon="@mipmap/fiiliskayra_round_icon_green"
         android:supportsRtl="true"
         android:theme="@style/Theme.VitutusKäyrä">
-        <activity android:name=".Notedetails"
-            android:parentActivityName=".Muistiinpanot"/>
-        <activity android:name=".Muistiinpanot"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Kayra"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.fiiliskayra.Notedetails"
+            android:parentActivityName="com.example.fiiliskayra.Muistiinpanot"/>
+        <activity android:name="com.example.fiiliskayra.Muistiinpanot"
+            android:parentActivityName="com.example.fiiliskayra.MainActivity"/>
+        <activity android:name="com.example.fiiliskayra.Kayra"
+            android:parentActivityName="com.example.fiiliskayra.MainActivity"/>
+        <activity android:name="com.example.fiiliskayra.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

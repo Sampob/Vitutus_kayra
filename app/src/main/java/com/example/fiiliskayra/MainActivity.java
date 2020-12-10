@@ -1,4 +1,4 @@
-package com.example.vitutuskyr;
+package com.example.fiiliskayra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,15 +21,25 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Sovelluksen päänäkymä.
+ * Rakentaa Merkinta muuttujia käyttäjän syötteiden mukaan ja tallentaa ne.
+ * Palattaessa muista aktiviteeteista, lataa merkinnät uudestaa mahdollisten muutosten vuoksi.
+ * @author Heta Huostila
+ */
+
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private NumberPicker picker;
-    public static final String EXTRA = "com.example.firstapp.test";
 
     private ArrayList<Merkinta> lista;
 
     private TextView menoText;
     private ArrayList<String> menoLista = new ArrayList<String>();
+
+    /**
+     * Käynnistyessä lataa merkinnät ja asettaa oletukset päänäkymän toimintaan.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +56,15 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         picker.setWrapSelectorWheel(true);
         picker.setDisplayedValues(pickerNums);
 
-        menoLista.add("Miten menee?"); menoLista.add("Mikä meno?"); menoLista.add("Kuis kulkee?");
+        menoLista.add("Miten menee?"); menoLista.add("Mikä meno?"); menoLista.add("Kuis kulkee?"); menoLista.add("Onko hyvä päivä?"); menoLista.add("Mitä on mielen päällä?");
         menoText = findViewById(R.id.menoText);
         menoText.setText(menoLista.get(new Random().nextInt(menoLista.size())));
 
     }
+
+    /**
+     * Palattaessa lataa merkinnät uudestaan.
+     */
 
     @Override
     protected void onResume(){
@@ -58,14 +72,31 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         readFile();
     }
 
+    /**
+     * Hakee tekstikentän merkkijonon ja asettaa sen tyhjäksi.
+     * @return Syötetyn merkkijonon.
+     */
+
     public String getMessage() {
         EditText editText = findViewById(R.id.noteBox);
         return editText.getText().toString();
     }
 
+    /**
+     * Hakee numeron numerovalitsimesta.
+     * @return Valitun kokonaisnumeron.
+     */
+
     public int getNumber(){
         return picker.getValue();
     }
+
+    /**
+     * Hakee merkkijonon sekä numeron ja lisää niiden avulla uuden Merkinta olion listaan.
+     * Lista muutetaan merkkijonoksi Gson moduulin avulla.
+     * <p>
+     * Liitetään tallennus nappulaan.
+     */
 
     public void saveThings(View v) {
         lista.add(new Merkinta(getMessage(), getNumber()));
@@ -79,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         Toast.makeText(MainActivity.this, "Saved", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Lukee tallennetut merkinnät ja tallentaa ne "lista" muuttujaan.
+     * SharedPreference muutetaan Gson moduulin avulla listaksi. Jos ladattavaa ei ole, luo uuden listan.
+     */
+
     public void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
         Gson gson = new Gson();
@@ -90,6 +126,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             lista = new ArrayList<>();
         }
     }
+
+    /**
+     * Näyttää ruudulla tekstiä sovelluksen toiminnasta.
+     * */
 
     public void infoButton(View v){
         Toast toast = Toast.makeText(MainActivity.this, "Tallenna fiiliksesi asteikolla 1-10 ja lisää muistiinpanoon mikä fiilis.", Toast.LENGTH_LONG);
@@ -103,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         menu.inflate(R.menu.popup_menu);
         menu.show();
     }
+
+    /**
+     * Pudotusvalikon luoja.
+     * Luo intentit kahdelle muulle aktiviteetille.
+     */
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {

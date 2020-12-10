@@ -1,4 +1,4 @@
-package com.example.vitutuskyr;
+package com.example.fiiliskayra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,18 +9,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.github.mikephil.charting.data.Entry;
+
 import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
-import java.net.Proxy;
+
 import java.util.ArrayList;
+
+/**
+ * Luokka rakentaa ja päivittää listanäkymä aktiviteettia.
+ * @author Antti Riikonen
+ */
 
 public class Muistiinpanot extends AppCompatActivity {
 
     public static final String EXTRA = "EXTRA";
     private ArrayList<Merkinta> lista;                              //Hakee listan, johon tallennetaan ja ladataan merkinnät
     ListView lv;                                                    //Hakee lista elementin
+
+    /**
+     * Kutsutaan aktiviteetin käynnistyessä.
+     * Hakee ja asettaa elementit paikoilleen. Käynnistää kuuntelijan käyrälle, joka
+     * käynnistää uuden aktiviteetin ja antaa listan tiedot eteenpäin.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,7 @@ public class Muistiinpanot extends AppCompatActivity {
             }
         });
     }
+
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);                           //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
         Gson gson = new Gson();

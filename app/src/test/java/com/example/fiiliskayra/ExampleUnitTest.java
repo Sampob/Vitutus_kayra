@@ -1,4 +1,4 @@
-package com.example.vitutuskyr;
+package com.example.fiiliskayra;
 
 import org.junit.Test;
 

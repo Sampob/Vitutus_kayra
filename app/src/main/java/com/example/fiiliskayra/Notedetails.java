@@ -1,4 +1,4 @@
-package com.example.vitutuskyr;
+package com.example.fiiliskayra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,10 +14,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Luokka rakentaa muistiinpanon tiedot näkyville.
+ * @author Antti Riikonen
+ */
+
 public class Notedetails extends AppCompatActivity {
 
     TextView textnote, textarvosana, textday;                 //Hakee teksti elementit
     private ArrayList<Merkinta> lista;                        //Hakee listan, johon tallennetaan ja ladataan merkinnät
+
+    /**
+     * Kutsutaan aktiviteetin käynnistyessä.
+     * Hakee merkinnän tiedot ja asettaa ne tekstielementteihin.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,7 @@ public class Notedetails extends AppCompatActivity {
         textarvosana.setText("" + lista.get(i).getNumero());
         textday.setText("Ajankohta: " + sdf.format(lista.get(i).getCalendar().getTime()));
     }
+
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);   //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
         Gson gson = new Gson();

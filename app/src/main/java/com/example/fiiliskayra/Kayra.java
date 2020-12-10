@@ -1,4 +1,4 @@
-package com.example.vitutuskyr;
+package com.example.fiiliskayra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +32,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Luokka rakentaa ja päivittää käyrä aktiviteettia.
+ * @author Sampo Bredenberg
+ * @version 1.3 7/12
+ */
+
 public class Kayra extends AppCompatActivity {
 
     private LineChart mpLineChart;      //MP Android Chart moduulista käytetään LineChart luokkaa joka piirtää käyrän
@@ -46,6 +51,11 @@ public class Kayra extends AppCompatActivity {
     private TextView dateText;
 
     private final DecimalFormat df = new DecimalFormat("0.0");  //mpLineChart näyttää numerot oletuksena liukuluvuissa (1.0 tai 5.0). Float pitää muuttaa muotoon Int.
+
+    /**
+     * Kutsutaan aktiviteetin käynnistyessä.
+     * Hakee ja asettaa elementit paikoilleen. Käynnistää kuuntelijan käyrälle.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +108,7 @@ public class Kayra extends AppCompatActivity {
      * Kutsuu lopuksi updateLine() joka rakentaa käyrän.
      * @see #updateLine()
      * @see #yAxisLabel()
-     * */
+     */
 
     public void lineDefault(){
         mpLineChart = findViewById(R.id.lineChart);                                                 //Etsitään MP Android Chart elementti
@@ -127,18 +137,17 @@ public class Kayra extends AppCompatActivity {
         updateLine();
     }
 
+
     /**
      * Rakentaa käyrän sekä asettaa X akselille arvot.
      * <p>
-     * readFile() lukee tallennetut merkinnät ja tallentaa sen lista muuttujaan. Käyrä rakennetaan dataValues() funktion avulla ja
-     * lisätään ArrayListaan, missä voi olla useita data settejä. Data muotoillaan haluttavalla tavalla ja
-     * asetetaan elementtiin.
+     * Käyrä rakennetaan dataValues() funktion avulla ja lisätään ArrayListaan, missä voi olla useita data settejä.
+     * Data muotoillaan haluttavalla tavalla ja asetetaan elementtiin.
      * <p>
      * lineDefault() kutsuu.
      * @see #lineDefault()
-     * @see #readFile()
      * @see #dataValues()
-     * */
+     */
 
     private void updateLine(){
         readFile();                                                                                 //Lukee tallennetut merkinnät ja laittaa ne lista ArrayListiin
@@ -183,8 +192,8 @@ public class Kayra extends AppCompatActivity {
 
         /* Asetetaan käyrän ominaisuudet. Itsestäänselviä */
         lineDataSet.setLineWidth(6);
-        lineDataSet.setColor(getResources().getColor(R.color.purple));
-        lineDataSet.setCircleColor(getResources().getColor(R.color.purple));
+        lineDataSet.setColor(getResources().getColor(R.color.purple_500));
+        lineDataSet.setCircleColor(getResources().getColor(R.color.purple_500));
         lineDataSet.setDrawCircleHole(true);
         lineDataSet.setCircleRadius(8);
         lineDataSet.setCircleHoleRadius(3);
@@ -203,7 +212,7 @@ public class Kayra extends AppCompatActivity {
      * <p>
      * updateLine() kutsuu.
      * @see #updateLine()
-     * */
+     */
 
     private void setAverageText(){
         TextView averageText = findViewById(R.id.averageText);                                      //Etsii teksti elementin joka näyttää keskiarvon
@@ -273,13 +282,14 @@ public class Kayra extends AppCompatActivity {
     }
 
     /**
-     * Sama kuin MainActivityssä. Hakee SharedPreferenssin, joka on tallennettu muotoon Gson.
-     * Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujaan lista. Jos dataa ei ole,
+     * Hakee SharedPreferenssin, joka on tallennettu muotoon Gson.
+     * Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujaan "lista". Jos dataa ei ole,
      * rakentaa uuden ArrayListan.
      * <p>
      * updateLine() kutsuu.
      * @see #updateLine()
      */
+
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
         Gson gson = new Gson();
@@ -298,7 +308,8 @@ public class Kayra extends AppCompatActivity {
      * updateLine() kutsuu.
      * @return  Merkintöjen numeroarvot (Y arvot) järjestyksessä joista rakennetaan käyrä.
      * @see #updateLine()
-     * */
+     */
+
     private ArrayList<Entry> dataValues(){
         ArrayList<Entry> dataVals = new ArrayList<>();
 
@@ -316,11 +327,13 @@ public class Kayra extends AppCompatActivity {
      * updateLine() kutsuu.
      * @return String ArrayLista merkintöjen luomispäivistä muodossa "dd.mm".
      * @see #updateLine()
-     * */
+     */
+
     private ArrayList<String> xAxisLabel() {
         ArrayList<String> xAxisList = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM", Locale.getDefault());
         for(int i=0; i < lista.size(); i++){
-            xAxisList.add(lista.get(i).getCurrentTime());
+            xAxisList.add(sdf.format(lista.get(i).getCalendar().getTime()));
         }
         return xAxisList;
     }
@@ -332,6 +345,7 @@ public class Kayra extends AppCompatActivity {
      * @return String ArrayLista arvona 1 - 10
      * @see #lineDefault()
      */
+
     private ArrayList<String> yAxisLabel(){
         ArrayList<String> label = new ArrayList<>();
         label.add("");
@@ -347,7 +361,8 @@ public class Kayra extends AppCompatActivity {
      * setAverageText() kutsuu.
      * @return Palauttaa listan merkintöjen keskiarvon.
      * @see #setAverageText()
-     * */
+     */
+
     private Float average(){
         float total = 0;
         for (int i = 0; i < lista.size(); i++){
@@ -363,6 +378,7 @@ public class Kayra extends AppCompatActivity {
      * @return Palauttaa listan 10 viimeisen merkinnän keskiarvon.
      * @see #setAverageText()
      */
+
     private Float tenAverage(){
         float total = 0;
         for (int i = lista.size() - 10; i < lista.size(); i++){
@@ -371,13 +387,14 @@ public class Kayra extends AppCompatActivity {
         return total / 10;
     }
 
-    /** Liitetään poisto nappulaan.
-     * Poisto nappula poistaa kohdan vain jos poistettavaa on.
-     * Index arvo on tallentanut merkinnän kohdan listassa
-     * ja se poistetaan. Tämän jälkeen tallennetaan SharedPreference,
+    /**Poistaa valitun arvon listasta ja rakentaa listan uudelleen.
+     * Tämän jälkeen tallennetaan SharedPreference,
      * poistetaan merkinnän arvot näkyvistä ja rakennetaan käyrä uudestaan.
      * Jos poistettavaa ei ole, näytetään Toast "Ei poistettavaa".
-     * */
+     * <p>
+     * Liitetään poisto nappulaan.
+     */
+
     public void delB(View v){
         if(lista.size() > 0 && delete) {
             lista.remove(index);
@@ -402,9 +419,13 @@ public class Kayra extends AppCompatActivity {
         }
     }
 
-    /**Merkintöihin on tallennettu Calendar joka sisältää ajankohdan jolloin merkintä on luotu.
+
+    /**Haetaan merkinnän aika arvo ja muotoillaan se muotoon "dd.MM HH:mm".
+     * Merkintöihin on tallennettu Calendar joka sisältää ajankohdan jolloin merkintä on luotu.
      * Tämä voidaan muuttaa haluttuun muotoon SimpleDateFormat avulla.
-     * Tästä saatu String palautetaan ja näytetään. */
+     * Tästä saatu String palautetaan ja näytetään.
+     */
+
     public String getTime(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm", Locale.getDefault());
         return sdf.format(lista.get(index).getCalendar().getTime());
