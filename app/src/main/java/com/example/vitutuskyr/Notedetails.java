@@ -32,7 +32,7 @@ public class Notedetails extends AppCompatActivity {
         textday = findViewById(R.id.textDay);
 
         readFile();                                                                                 //Lukee tallennetut merkinnät, jotta teksti elementit saavat oikeat arvot
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm", Locale.getDefault());    //Tällä saadaan päivä ja kellon aika, milloin muistiinpano on tehty
         textnote.setText(lista.get(i).getNote());                                                   //Asettaa teksti elementeille arvot
         textarvosana.setText("" + lista.get(i).getNumero());
         textday.setText("Päivä: " + sdf.format(lista.get(i).getCalendar().getTime()));
@@ -40,11 +40,11 @@ public class Notedetails extends AppCompatActivity {
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);   //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("lista", null);                   //Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujan listaan
+        String json = sharedPreferences.getString("lista", null);                    //Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujan listaan
         Type type = new TypeToken<ArrayList<Merkinta>>() {}.getType();
         lista = gson.fromJson(json, type);
 
-        if (lista == null){                                                                       //Rakentaa uuden listan, jos dataa ei ole
+        if (lista == null){                                                                        //Rakentaa uuden listan, jos dataa ei ole
             lista = new ArrayList<>();
         }
     }
