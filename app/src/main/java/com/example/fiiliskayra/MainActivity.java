@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
     public String getMessage() {
         EditText editText = findViewById(R.id.noteBox);
-        return editText.getText().toString();
+        String s = editText.getText().toString();
+        editText.setText("");
+        return s;
     }
 
     /**
