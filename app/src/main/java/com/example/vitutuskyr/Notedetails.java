@@ -35,7 +35,7 @@ public class Notedetails extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm", Locale.getDefault());    //Tällä saadaan päivä ja kellon aika, milloin muistiinpano on tehty
         textnote.setText(lista.get(i).getNote());                                                   //Asettaa teksti elementeille arvot
         textarvosana.setText("" + lista.get(i).getNumero());
-        textday.setText("Päivä: " + sdf.format(lista.get(i).getCalendar().getTime()));
+        textday.setText("Ajankohta: " + sdf.format(lista.get(i).getCalendar().getTime()));
     }
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);   //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
