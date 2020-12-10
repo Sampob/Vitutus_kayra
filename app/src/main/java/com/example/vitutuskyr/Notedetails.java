@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Notedetails extends AppCompatActivity {
 
     TextView textnote, textarvosana, textday;                 //Hakee teksti elementit
-    private ArrayList<Merkinta> lista;                  //Hakee listan, johon tallennetaan ja ladataan merkinnät
+    private ArrayList<Merkinta> lista;                        //Hakee listan, johon tallennetaan ja ladataan merkinnät
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +37,11 @@ public class Notedetails extends AppCompatActivity {
     private void readFile() {
         SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);   //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("lista", null);   //Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujan listaan
+        String json = sharedPreferences.getString("lista", null);                   //Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujan listaan
         Type type = new TypeToken<ArrayList<Merkinta>>() {}.getType();
         lista = gson.fromJson(json, type);
 
-    if (lista == null){                                                       //Rakentaa uuden listan, jos dataa ei ole
+    if (lista == null){                                                                          //Rakentaa uuden listan, jos dataa ei ole
             lista = new ArrayList<>();
         }
     }
