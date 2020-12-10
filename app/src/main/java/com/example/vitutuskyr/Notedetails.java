@@ -11,11 +11,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Notedetails extends AppCompatActivity {
 
-    TextView textnote, textka, textday;                 //Hakee teksti elementit
+    TextView textnote, textarvosana, textday;                 //Hakee teksti elementit
     private ArrayList<Merkinta> lista;                  //Hakee listan, johon tallennetaan ja ladataan merkinnät
 
     @Override
@@ -27,12 +26,12 @@ public class Notedetails extends AppCompatActivity {
         int i = b.getInt(Muistiinpanot.EXTRA, 0);
 
         textnote = findViewById(R.id.textNote);                                 //Hakee teksti elementit
-        textka = findViewById(R.id.textKa);
+        textarvosana = findViewById(R.id.textArvosana);
         textday = findViewById(R.id.textDay);
 
         readFile();                                                             //Lukee tallennetut merkinnät, jotta teksti elementit saavat oikeat arvot
         textnote.setText(lista.get(i).getNote());                               //Asettaa teksti elementeille arvot
-        textka.setText("" + lista.get(i).getNumero());
+        textarvosana.setText("" + lista.get(i).getNumero());
         textday.setText("Päivä: " + lista.get(i).getCalendar().getTime());
     }
     private void readFile() {
