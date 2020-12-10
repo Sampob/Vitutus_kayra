@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -15,13 +19,17 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     private NumberPicker picker;
     public static final String EXTRA = "com.example.firstapp.test";
 
     private ArrayList<Merkinta> lista;
+
+    private TextView menoText;
+    private ArrayList<String> menoLista = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         picker.setMaxValue(pickerNums.length);
         picker.setWrapSelectorWheel(true);
         picker.setDisplayedValues(pickerNums);
+
+        menoLista.add("Miten menee?"); menoLista.add("Mikä meno?"); menoLista.add("Kuis kulkee?");
+        menoText = findViewById(R.id.menoText);
+        menoText.setText(menoLista.get(new Random().nextInt(menoLista.size())));
 
     }
 
@@ -79,12 +91,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void graphView(View v){
-        Intent intent = new Intent(this, Kayra.class);
-        startActivity(intent);
+    public void infoButton(View v){
+        Toast toast = Toast.makeText(MainActivity.this, "Tallenna fiiliksesi asteikolla 1-10 ja lisää muistiinpanoon mikä fiilis.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP,0,0);
+        toast.show();
     }
-    public void noteView(View v){
-        Intent intent = new Intent(this, Muistiinpanot.class);
-        startActivity(intent);
+
+    public void menuPopup(View v) {
+        PopupMenu menu = new PopupMenu(this, v);
+        menu.setOnMenuItemClickListener(this);
+        menu.inflate(R.menu.popup_menu);
+        menu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Intent intentKayra = new Intent(this, Kayra.class);
+        Intent intentPanot = new Intent(this, Muistiinpanot.class);
+        switch (item.getItemId()) {
+            case R.id.kayra:
+                startActivity(intentKayra);
+                return true;
+            case R.id.muistiinpanot:
+                startActivity(intentPanot);
+                return true;
+            default:
+                return false;
+        }
     }
 }
