@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/fiiliskayra_round_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.VitutusKäyrä">
-        <activity android:name=".Notedetails"></activity>
+        <activity android:name=".Notedetails"
+            android:parentActivityName=".Muistiinpanot"/>
         <activity android:name=".Muistiinpanot"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".Kayra"

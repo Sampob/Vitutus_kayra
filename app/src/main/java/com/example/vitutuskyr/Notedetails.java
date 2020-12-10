@@ -2,26 +2,50 @@ package com.example.vitutuskyr;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.util.Calendar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class Notedetails extends AppCompatActivity {
 
-    TextView textnote, textka;
+    TextView textnote, textarvosana, textday;                 //Hakee teksti elementit
+    private ArrayList<Merkinta> lista;                        //Hakee listan, johon tallennetaan ja ladataan merkinnät
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notedetails);
 
-        Bundle b = getIntent().getExtras();
+        Bundle b = getIntent().getExtras();                                     //Reagoi listan klikkaamiseen
         int i = b.getInt(Muistiinpanot.EXTRA, 0);
 
-        textnote = findViewById(R.id.textNote);
-        textka = findViewById(R.id.textKa);
+        textnote = findViewById(R.id.textNote);                                 //Hakee teksti elementit
+        textarvosana = findViewById(R.id.textArvosana);
+        textday = findViewById(R.id.textDay);
 
-        textnote.setText(GlobalModel.getInstance().getLista().get(i).getNote());
+        readFile();                                                                                 //Lukee tallennetut merkinnät, jotta teksti elementit saavat oikeat arvot
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM HH:mm", Locale.getDefault());    //Tällä saadaan päivä ja kellon aika, milloin muistiinpano on tehty
+        textnote.setText(lista.get(i).getNote());                                                   //Asettaa teksti elementeille arvot
+        textarvosana.setText("" + lista.get(i).getNumero());
+        textday.setText("Ajankohta: " + sdf.format(lista.get(i).getCalendar().getTime()));
+    }
+    private void readFile() {
+        SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);   //Hakee SharedPreferenssin, joka on tallennettu muotoon Gson
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("lista", null);                    //Muuttaa datan Gsonista ArrayList<Merkinta> muotoon ja tallentaa sen muuttujan listaan
+        Type type = new TypeToken<ArrayList<Merkinta>>() {}.getType();
+        lista = gson.fromJson(json, type);
+
+        if (lista == null){                                                                        //Rakentaa uuden listan, jos dataa ei ole
+            lista = new ArrayList<>();
+        }
     }
 }
