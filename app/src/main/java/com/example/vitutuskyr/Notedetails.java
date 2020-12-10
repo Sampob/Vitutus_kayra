@@ -41,7 +41,7 @@ public class Notedetails extends AppCompatActivity {
         Type type = new TypeToken<ArrayList<Merkinta>>() {}.getType();
         lista = gson.fromJson(json, type);
 
-    if (lista == null){                                                                          //Rakentaa uuden listan, jos dataa ei ole
+        if (lista == null){                                                                       //Rakentaa uuden listan, jos dataa ei ole
             lista = new ArrayList<>();
         }
     }
