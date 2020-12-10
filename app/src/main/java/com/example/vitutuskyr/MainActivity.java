@@ -91,17 +91,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
     }
 
-    /*
-    public void graphView(View v){
-        Intent intent = new Intent(this, Kayra.class);
-        startActivity(intent);
-    }
-    public void noteView(View v){
-        Intent intent = new Intent(this, Muistiinpanot.class);
-        startActivity(intent);
-    }
-     */
-
     public void infoButton(View v){
         Toast toast = Toast.makeText(MainActivity.this, "Tallenna fiiliksesi asteikolla 1-10 ja lisää muistiinpanoon mikä fiilis.", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP,0,0);
