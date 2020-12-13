@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         picker.setWrapSelectorWheel(true);
         picker.setDisplayedValues(pickerNums);
 
-        menoLista.add("Miten menee?"); menoLista.add("Mikä meno?"); menoLista.add("Kuis kulkee?"); menoLista.add("Onko hyvä päivä?"); menoLista.add("Mitä on mielen päällä?");
+        menoLista.add("Miten menee?"); menoLista.add("Mikä meno?"); menoLista.add("Kuis kulkee?"); menoLista.add("Onko hyvä päivä?");
         menoText = findViewById(R.id.menoText);
         menoText.setText(menoLista.get(new Random().nextInt(menoLista.size())));
 
